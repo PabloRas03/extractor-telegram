@@ -4,139 +4,75 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="theme-color" content="#171827">
-<title>Extractor de números | Telegram</title>
+<title>Extractor de mensajes completos</title>
 <style>
-:root{color-scheme:dark;--bg:#10111b;--panel:#191b2a;--panel2:#222438;--text:#f6f6fb;--muted:#b7bad0;--accent:#8b5cf6;--accent2:#a78bfa;--border:#35384f;--good:#34d399}
-*{box-sizing:border-box}
-body{margin:0;background:radial-gradient(ellipse at top,#24203e 0,#10111b 48%);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
-main{max-width:820px;margin:0 auto;padding:24px 16px calc(32px + env(safe-area-inset-bottom))}
-header{display:flex;align-items:center;gap:13px;margin:4px 0 22px}
-.logo{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,#8b5cf6,#5b21b6);display:grid;place-items:center;font-size:25px;box-shadow:0 8px 28px #8b5cf633}
-h1{font-size:22px;line-height:1.15;margin:0 0 5px}
-.subtitle{font-size:13px;color:var(--muted)}
-.card{background:rgba(25,27,42,.96);border:1px solid var(--border);border-radius:20px;padding:18px;margin:14px 0;box-shadow:0 12px 32px #00000017}
-h2{font-size:16px;margin:0 0 10px}
-.help{color:var(--muted);font-size:13px;margin:0 0 12px}
-textarea{width:100%;min-height:210px;resize:vertical;background:#111321;border:1px solid #41445f;border-radius:13px;padding:13px;color:var(--text);font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;outline:none}
-textarea:focus{border-color:var(--accent2);box-shadow:0 0 0 3px #8b5cf633}
-button{border:0;border-radius:12px;padding:12px 14px;font-weight:650;font-size:14px;cursor:pointer;min-height:44px}
-button:focus-visible{outline:3px solid var(--accent2);outline-offset:2px}
-.primary{background:var(--accent);color:white;flex:1}
-.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--border)}
-.ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
-.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}
-.actions button{flex:1}
-.stats{display:flex;gap:10px;margin:12px 0}
-.stat{background:#111321;border:1px solid var(--border);border-radius:13px;padding:11px 13px;flex:1}
-.stat strong{display:block;font-size:22px}
-.stat span{font-size:12px;color:var(--muted)}
-.results{min-height:95px;max-height:360px;overflow:auto;background:#111321;border:1px solid var(--border);border-radius:13px;padding:12px;font:14px/1.8 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
-.empty{color:#777b98;font-family:inherit}
-.note{font-size:12px;color:var(--muted);margin:13px 2px 0}
-.status{min-height:20px;color:var(--good);font-size:13px;margin-top:9px}
-footer{text-align:center;color:#888ba5;font-size:12px;padding:8px}
-@media(min-width:640px){main{padding-top:36px}.card{padding:22px}textarea{min-height:240px}}
+:root{color-scheme:dark;--bg:#10111b;--panel:#191b2a;--panel2:#222438;--text:#f6f6fb;--muted:#b7bad0;--accent:#8b5cf6;--border:#35384f;--good:#34d399}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(ellipse at top,#24203e 0,#10111b 48%);color:var(--text);font:16px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;min-height:100vh}
+main{max-width:850px;margin:0 auto;padding:24px 15px calc(32px + env(safe-area-inset-bottom))}
+header{display:flex;align-items:center;gap:13px;margin:4px 0 22px}.logo{width:50px;height:50px;border-radius:16px;background:linear-gradient(135deg,#8b5cf6,#5b21b6);display:grid;place-items:center;font-size:25px}
+h1{font-size:22px;line-height:1.15;margin:0 0 5px}.subtitle,.help,.note{color:var(--muted);font-size:13px}
+.card{background:rgba(25,27,42,.96);border:1px solid var(--border);border-radius:20px;padding:17px;margin:14px 0}
+h2{font-size:16px;margin:0 0 9px}.help{margin:0 0 12px}
+textarea{width:100%;min-height:230px;resize:vertical;background:#111321;border:1px solid #41445f;border-radius:13px;padding:13px;color:var(--text);font:14px/1.5 ui-monospace,SFMono-Regular,Menlo,monospace;outline:none}
+textarea:focus{border-color:#a78bfa;box-shadow:0 0 0 3px #8b5cf633}
+button,.filelabel{border:0;border-radius:12px;padding:12px 14px;font-weight:650;font-size:14px;cursor:pointer;min-height:44px;display:inline-flex;align-items:center;justify-content:center;text-align:center}
+.primary{background:var(--accent);color:white}.secondary,.filelabel{background:var(--panel2);color:var(--text);border:1px solid var(--border)}.ghost{background:transparent;color:var(--muted);border:1px solid var(--border)}
+.actions{display:flex;gap:9px;flex-wrap:wrap;margin-top:12px}.actions button,.actions .filelabel{flex:1}
+input[type=file]{position:absolute;width:1px;height:1px;opacity:0;overflow:hidden}
+.stats{display:flex;gap:10px;margin:12px 0}.stat{background:#111321;border:1px solid var(--border);border-radius:13px;padding:11px 13px;flex:1}.stat strong{display:block;font-size:22px}.stat span{font-size:12px;color:var(--muted)}
+.results{min-height:95px;max-height:420px;overflow:auto;background:#111321;border:1px solid var(--border);border-radius:13px;padding:12px;font:14px/1.65 ui-monospace,SFMono-Regular,Menlo,monospace;white-space:pre-wrap;overflow-wrap:anywhere}
+.empty{color:#777b98;font-family:inherit}.note{margin:12px 2px 0}.status{min-height:20px;color:var(--good);font-size:13px;margin-top:9px}footer{text-align:center;color:#888ba5;font-size:12px;padding:8px}
+@media(min-width:640px){main{padding-top:36px}.card{padding:22px}}
 </style>
 </head>
 <body>
 <main>
-<header>
-  <div class="logo" aria-hidden="true">|</div>
-  <div><h1>Extractor de números</h1><div class="subtitle">Para texto copiado de Telegram · Funciona en tu iPhone</div></div>
-</header>
+<header><div class="logo">|</div><div><h1>Extractor de mensajes completos</h1><div class="subtitle">Filtra mensajes largos copiados de Telegram</div></div></header>
 
 <section class="card">
-  <h2>1. Pega los mensajes</h2>
-  <p class="help">Pega aquí el texto completo, aunque sean 100 mensajes largos. Se procesa en tu dispositivo; el texto no se envía a ningún servidor.</p>
-  <textarea id="source" placeholder="Pega aquí los mensajes copiados de Telegram…"></textarea>
-  <div class="actions">
-    <button class="primary" id="extract">Extraer números</button>
-    <button class="ghost" id="clear">Borrar todo</button>
-  </div>
-  <p class="note">Busca formatos como <strong>1234|56</strong> o <strong>1234 | 56</strong>. Solo extrae números separados por el signo |.</p>
+<h2>1. Pega el texto o carga un archivo</h2>
+<p class="help">Pega el texto completo o carga un archivo .txt exportado/copiadо. Para textos muy largos en iPhone, cargar un .txt suele ser más práctico. Todo se procesa en este dispositivo.</p>
+<textarea id="source" placeholder="Pega aquí los mensajes completos…"></textarea>
+<div class="actions">
+<label class="filelabel" for="fileInput">Cargar archivo .txt</label>
+<input id="fileInput" type="file" accept=".txt,text/plain">
+<button class="ghost" id="clear">Borrar texto</button>
+</div>
+<p class="note">Conserva el mensaje completo si contiene un código numérico con cuatro partes, por ejemplo <strong>2039292292029|03|0221|200</strong>. Descarta el mensaje completo si contiene “XXXX” (sin importar mayúsculas/minúsculas). Los mensajes repetidos se muestran una sola vez.</p>
+<div class="actions"><button class="primary" id="extract">Extraer mensajes válidos</button></div>
 </section>
 
 <section class="card">
-  <h2>2. Resultados</h2>
-  <div class="stats">
-    <div class="stat"><strong id="uniqueCount">0</strong><span>Resultados únicos</span></div>
-    <div class="stat"><strong id="allCount">0</strong><span>Coincidencias encontradas</span></div>
-  </div>
-  <div id="results" class="results"><span class="empty">Aquí aparecerán los números extraídos, uno por línea.</span></div>
-  <div class="actions">
-    <button class="primary" id="copy">Copiar resultados</button>
-    <button class="secondary" id="download">Exportar TXT</button>
-  </div>
-  <div class="status" id="status" role="status" aria-live="polite"></div>
+<h2>2. Mensajes encontrados</h2>
+<div class="stats"><div class="stat"><strong id="uniqueCount">0</strong><span>Mensajes únicos</span></div><div class="stat"><strong id="matchCount">0</strong><span>Mensajes con código válido</span></div></div>
+<div id="results" class="results"><span class="empty">Aquí aparecerán los mensajes completos que cumplan las reglas.</span></div>
+<div class="actions"><button class="primary" id="copy">Copiar resultados</button><button class="secondary" id="download">Exportar TXT</button></div>
+<div class="status" id="status" role="status" aria-live="polite"></div>
 </section>
-<footer>Los duplicados se eliminan automáticamente y se conserva el orden de la primera aparición.</footer>
+<footer>El filtro no envía tu texto a ningún servidor.</footer>
 </main>
 <script>
-const source = document.getElementById('source');
-const results = document.getElementById('results');
-const uniqueCount = document.getElementById('uniqueCount');
-const allCount = document.getElementById('allCount');
-const status = document.getElementById('status');
-let extracted = [];
-
-function runExtraction() {
-  const text = source.value;
-  // Requiere dígitos a ambos lados del separador; permite espacios alrededor de |.
-  const regex = /\d+\s*\|\s*\d+/g;
-  const matches = text.match(regex) || [];
-  const normalized = matches.map(value => value.replace(/\s*\|\s*/g, '|'));
-  extracted = [...new Set(normalized)];
-  uniqueCount.textContent = extracted.length.toLocaleString('es-MX');
-  allCount.textContent = matches.length.toLocaleString('es-MX');
-  results.textContent = extracted.length ? extracted.join('\n') : '';
-  if (!extracted.length) {
-    results.innerHTML = '<span class="empty">No se encontraron números con el formato 1234|56. Revisa el texto pegado.</span>';
-    status.textContent = '';
-  } else {
-    status.textContent = 'Listo. Se eliminaron los duplicados.';
-  }
+const source=document.getElementById('source'), results=document.getElementById('results'), status=document.getElementById('status');
+const uniqueCount=document.getElementById('uniqueCount'), matchCount=document.getElementById('matchCount');
+let extracted=[];
+function extractMessages(){
+  const text=source.value.replace(/\r\n?/g,'\n').trim();
+  // Treat a blank line (two or more newline characters) as a boundary between pasted messages.
+  // Paragraphs separated by a single newline remain inside the same message.
+  const blocks=text ? text.split(/\n[ \t]*\n+/).map(x=>x.trim()).filter(Boolean) : [];
+  const codePattern=/(?<!\d)\d+(?:\s*\|\s*\d+){3}(?!\d)/;
+  const matches=blocks.filter(block => codePattern.test(block) && !/x{4,}/i.test(block));
+  const seen=new Set();
+  extracted=matches.filter(block=>{const key=block.replace(/\s+/g,' ').trim();if(seen.has(key))return false;seen.add(key);return true;});
+  uniqueCount.textContent=extracted.length.toLocaleString('es-MX');
+  matchCount.textContent=matches.length.toLocaleString('es-MX');
+  if(extracted.length){results.textContent=extracted.join('\n\n');status.textContent='Listo: se conservaron los mensajes completos y se eliminaron duplicados.';}
+  else {results.innerHTML='<span class="empty">No se encontraron mensajes que cumplan las reglas. Revisa el formato o cómo están separados los mensajes.</span>';status.textContent='';}
 }
-document.getElementById('extract').addEventListener('click', runExtraction);
-document.getElementById('clear').addEventListener('click', () => {
-  source.value = '';
-  extracted = [];
-  uniqueCount.textContent = '0';
-  allCount.textContent = '0';
-  results.innerHTML = '<span class="empty">Aquí aparecerán los números extraídos, uno por línea.</span>';
-  status.textContent = '';
-  source.focus();
-});
-document.getElementById('copy').addEventListener('click', async () => {
-  if (!extracted.length) { status.textContent = 'Primero pega el texto y pulsa “Extraer números”.'; return; }
-  const value = extracted.join('\n');
-  try {
-    await navigator.clipboard.writeText(value);
-    status.textContent = 'Resultados copiados al portapapeles.';
-  } catch (e) {
-    const helper = document.createElement('textarea');
-    helper.value = value;
-    helper.style.position = 'fixed';
-    helper.style.opacity = '0';
-    document.body.appendChild(helper);
-    helper.select();
-    const ok = document.execCommand('copy');
-    helper.remove();
-    status.textContent = ok ? 'Resultados copiados al portapapeles.' : 'No se pudo copiar automáticamente. Mantén pulsados los resultados para copiarlos.';
-  }
-});
-document.getElementById('download').addEventListener('click', () => {
-  if (!extracted.length) { status.textContent = 'Primero pega el texto y pulsa “Extraer números”.'; return; }
-  const blob = new Blob(['\ufeff' + extracted.join('\n') + '\n'], {type:'text/plain;charset=utf-8'});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement('a');
-  a.href = url;
-  a.download = 'numeros_extraidos.txt';
-  document.body.appendChild(a);
-  a.click();
-  a.remove();
-  setTimeout(() => URL.revokeObjectURL(url), 1000);
-  status.textContent = 'Archivo TXT preparado. Revisa Descargas o la app Archivos.';
-});
+document.getElementById('extract').addEventListener('click',extractMessages);
+document.getElementById('clear').addEventListener('click',()=>{source.value='';extracted=[];uniqueCount.textContent='0';matchCount.textContent='0';results.innerHTML='<span class="empty">Aquí aparecerán los mensajes completos que cumplan las reglas.</span>';status.textContent='';});
+document.getElementById('fileInput').addEventListener('change',async e=>{const file=e.target.files&&e.target.files[0];if(!file)return;try{source.value=await file.text();status.textContent='Archivo cargado: '+file.name;}catch(err){status.textContent='No se pudo leer el archivo. Prueba con un archivo .txt.';}e.target.value='';});
+document.getElementById('copy').addEventListener('click',async()=>{if(!extracted.length){status.textContent='Primero pega o carga texto y pulsa “Extraer mensajes válidos”.';return;}const value=extracted.join('\n\n');try{await navigator.clipboard.writeText(value);status.textContent='Mensajes completos copiados.';}catch(e){const helper=document.createElement('textarea');helper.value=value;helper.style.position='fixed';helper.style.opacity='0';document.body.appendChild(helper);helper.select();const ok=document.execCommand('copy');helper.remove();status.textContent=ok?'Mensajes completos copiados.':'No se pudo copiar automáticamente; mantén pulsados los resultados para copiarlos.';}});
+document.getElementById('download').addEventListener('click',()=>{if(!extracted.length){status.textContent='Primero extrae los mensajes.';return;}const blob=new Blob(['\ufeff'+extracted.join('\n\n')+'\n'],{type:'text/plain;charset=utf-8'});const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download='mensajes_filtrados.txt';document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000);status.textContent='Archivo TXT preparado. Revisa Archivos/Descargas.';});
 </script>
-</body>
-</html>
+</body></html>
